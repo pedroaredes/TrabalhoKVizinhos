@@ -1,0 +1,24 @@
+package trabalho2;
+
+class Ponto {
+
+    int coordX;
+    int coordY;
+
+    //construtor
+    Ponto(int x, int y) {
+        coordX = x;
+        coordY = y;
+    }
+
+    //para printar
+    public String toString() {
+        return "X: " + this.coordX +" Y: " + this.coordY;
+    }
+    //𝑑𝑖𝑠𝑡(𝑃1, 𝑃2) = √(𝑃1. 𝑥 − 𝑃2. 𝑥)^2 + (𝑃1. 𝑦 − 𝑃2. 𝑦) ^ 2
+
+    public double distancia(Ponto outro) {        
+        return Math.sqrt(Math.pow(this.coordX - outro.coordX, 2) + Math.pow(this.coordY - outro.coordY, 2));        
+                 
+    }
+}
