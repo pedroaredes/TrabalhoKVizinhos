@@ -1,0 +1,76 @@
+package trabalho2;
+
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Scanner;
+
+public class Trabalho2 {
+
+    public static void main(String[] args) throws FileNotFoundException, IOException {
+        //
+        FileReader objTexto;
+        Scanner ler = new Scanner(System.in);
+        objTexto = new FileReader("pontos.txt");
+        BufferedReader objBufferizado;
+        objBufferizado = new BufferedReader(objTexto);
+        //criando linha e um vetor de string para ler o arquivo
+        String linha, vetorString[];
+        linha = objBufferizado.readLine();
+        int teste = Integer.parseInt(linha);
+        Ponto[] pontos = new Ponto[teste];        
+        //variavel de escolha e coordenadas
+        int escolha, x, y,k;
+        
+        
+        //atribuindo valores ao vetor de objeto, atraves do arquivop txt
+        for (int i = 0; i < teste; i++) {
+            linha = objBufferizado.readLine();
+            vetorString = linha.split(" ");
+            x = Integer.parseInt(vetorString[0]);
+            vetorString = linha.split(" ");
+            y = Integer.parseInt(vetorString[1]);
+            pontos[i] = new Ponto(x, y);
+
+        }
+
+        for (int i = 0; i < pontos.length; i++) {
+            System.out.println(pontos[i]);
+        }
+        //escolhendo o indice que representa o ponto escolhido
+        System.out.println("Escolha o indice de uma das coordenadas:");
+        escolha = ler.nextInt();
+        System.out.println("Quantos vizinhos próximos deseja mostrar?\n");
+        k = ler.nextInt();
+        double[] distancia = new double[k+1];
+        for (int i = 0; i < distancia.length; i++) {
+            distancia[i] = pontos[i].distancia(pontos[escolha]);
+            
+        }
+        //organizando o vetor de distancia
+        organizaBolha(distancia);
+        //imprimindo o vetor de distancias
+        imprimeDistancia(distancia, escolha, pontos);
+
+    }
+
+    private static void organizaBolha(double[] distancia) {
+        for (int i = 0; i < distancia.length; i++) {
+            for (int j = 0; j < distancia.length - 1 - i; j++) {
+                if (distancia[j] > distancia[j + 1]) { //troca
+                    double aux = distancia[j];
+                    distancia[j] = distancia[j + 1];
+                    distancia[j + 1] = aux;
+                }
+            }
+        }
+
+    }
+
+    private static void imprimeDistancia(double[] distancia, int escolha, Ponto pontos[]) {
+        for (int i = 1; i < distancia.length; i++) {
+            System.out.printf("Distancia de " + pontos[escolha] + " ao ponto vizinho é de = %.2f %n", +distancia[i]);
+        }
+    }
+}
